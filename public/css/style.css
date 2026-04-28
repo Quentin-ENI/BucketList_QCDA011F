@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+}
+
+header {
+    background-color: #A5A58D;
+}
+
+header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header li {
+    list-style: none;
+}
+
+header div {
+    display: flex;
+}
+
+header div p {
+    font-size: 42px;
+}
+
+.header-logo {
+    max-width: 42px;
+    margin-right: 5px;
+}
+
+main {
+    background-color: #FFF1E6;
+}
+
+footer {
+    padding: 1.5rem 0;
+    text-align: center;
+    background-color: #EDDCD2;
+}
