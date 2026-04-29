@@ -42,3 +42,8 @@ footer {
     text-align: center;
     background-color: #EDDCD2;
 }
+
+nav > ul {
+    display: flex;
+    flex-direction: row;
+}
