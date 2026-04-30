@@ -5,8 +5,8 @@
 {% block body %}
     <h1>Liste des souhaits</h1>
     <ul>
-    {% for firstName, wish in wishes %}
-        <a href="{{ path('wish_detail', {id: keys[firstName]}) }}"><li>{{ wish }}</li></a>
+    {% for wish in wishes %}
+        <li><a href="{{ path('wish_detail', {id: wish.id}) }}">{{ wish.title }}</a></li>
     {% endfor %}
     </ul>
 {% endblock %}
