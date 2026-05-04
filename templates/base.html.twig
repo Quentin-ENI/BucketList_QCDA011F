@@ -13,6 +13,12 @@
     <body>
         {% include 'shared/header.html.twig' %}
 
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <p class={{ label }}>{{ message }}</p>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
 
         {% include 'shared/footer.html.twig' %}

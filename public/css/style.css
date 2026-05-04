@@ -47,3 +47,11 @@ nav > ul {
     display: flex;
     flex-direction: row;
 }
+
+.success {
+    background-color: green;
+}
+
+.danger {
+    background-color: darkred;
+}
