@@ -2,11 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Wish;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class WishFixtures extends Fixture
+class WishFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -21,9 +23,20 @@ class WishFixtures extends Fixture
             $wish->setDateCreated($faker->dateTime());
             $wish->setDateUpdated(null);
 
+            $keyCategory = CategoryFixtures::$categoryKeys[
+                random_int(0, count(CategoryFixtures::$categoryKeys) - 1)
+            ];
+            $category = $this->getReference($keyCategory, Category::class);
+            $wish->setCategory($category);
+
             $manager->persist($wish);
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [CategoryFixtures::class];
     }
 }
