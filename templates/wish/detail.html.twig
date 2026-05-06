@@ -7,8 +7,12 @@
 {% block body %}
     <h1>{{ wish.title }}</h1>
     <p>[{{ wish.category.name }}]</p>
-    <p><em>Created by {{ wish.author }} on {{ wish.dateCreated | date("Y-m-d") }}</em></p>
+    <p><em>Created by {{ wish.author.username }} on {{ wish.dateCreated | date("Y-m-d") }}</em></p>
     <p>{{ wish.description }}</p>
-    <a href="{{ path('wish_update', {id: wish.id}) }}"><button>Modifier</button></a>
-    <a href="{{ path('wish_delete', {id: wish.id}) }}"><button>Supprimer</button></a>
+    {% if app.user.username == wish.author.username %}
+        <a href="{{ path('wish_update', {id: wish.id}) }}"><button>Modifier</button></a>
+    {% endif %}
+    {% if app.user.username == wish.author.username or is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('wish_delete', {id: wish.id}) }}"><button>Supprimer</button></a>
+    {% endif %}
 {% endblock %}

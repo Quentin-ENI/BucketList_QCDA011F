@@ -58,6 +58,8 @@ final class WishController extends AbstractController
             try {
                 $wish->setDateCreated(new \DateTime());
 
+                $wish->setAuthor($this->getUser());
+
                 $entityManager->persist($wish);
                 $entityManager->flush();
 
@@ -84,6 +86,16 @@ final class WishController extends AbstractController
     ): Response {
         try {
             $wish = $wishRepository->find($id);
+
+            $isAuthorized =
+                ($wish->getAuthor()->getUserIdentifier() === $this->getUser()->getUserIdentifier())
+                || $this->isGranted('ROLE_ADMIN');
+
+            if (!$isAuthorized) {
+                $this->addFlash('danger', "Vous n'êtes pas autorisé à supprimer le souhait.");
+                return $this->redirectToRoute('wish_list');
+            }
+
             if (!($wish === null)) {
                 $entityManager->remove($wish);
                 $entityManager->flush();
@@ -105,8 +117,15 @@ final class WishController extends AbstractController
         EntityManagerInterface $entityManager,
         Request $request
     ): Response {
+
         try {
             $wish = $wishRepository->find($id);
+
+            if ($wish->getAuthor()->getUserIdentifier() != $this->getUser()->getUserIdentifier()) {
+                $this->addFlash('danger', "Vous n'êtes pas autorisé à modifier le souhait.");
+                return $this->redirectToRoute('wish_list');
+            }
+
             if ($wish === null) {
                 $this->addFlash('danger', "Le souhait n'existe pas.");
                 return $this->redirectToRoute('wish_list');

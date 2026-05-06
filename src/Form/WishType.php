@@ -24,13 +24,10 @@ class WishType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ])
-            ->add('author', TextType::class, [
-                'label' => 'Ton pseudo'
-            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
-                'label' => 'Categorie',
+                'label' => 'Catégorie',
                 'required' => true
             ])
             ->add('isPublished', CheckboxType::class, [

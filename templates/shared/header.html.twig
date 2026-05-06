@@ -15,6 +15,10 @@
             {% if app.user %}
                 <a href="{{ path("wish_create") }}"><li>Ajouter un souhait</li></a>
                 <a href="{{ path("app_logout") }}"><li>Se déconnecter</li></a>
+                <li><strong>Hello {{ app.user.username }}</strong></li>
+            {% else %}
+                <a href="{{ path("app_login") }}"><li>Se connecter</li></a>
+                <a href="{{ path("app_register") }}"><li>Créer un compte</li></a>
             {% endif %}
         </ul>
     </nav>
