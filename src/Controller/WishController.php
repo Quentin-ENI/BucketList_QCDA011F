@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Wish;
 use App\Form\WishType;
 use App\Repository\WishRepository;
+use App\Service\CensuratorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,7 +46,8 @@ final class WishController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function create(
         EntityManagerInterface $entityManager,
-        Request $request
+        Request $request,
+        CensuratorService $censuratorService
     ): Response {
         $wish = new Wish();
         $wishForm = $this->createForm(WishType::class, $wish, [
@@ -57,8 +59,13 @@ final class WishController extends AbstractController
         if ($wishForm->isSubmitted() && $wishForm->isValid()) {
             try {
                 $wish->setDateCreated(new \DateTime());
-
                 $wish->setAuthor($this->getUser());
+
+                $wish->setDescription(
+                    $censuratorService->purify(
+                        $wish->getDescription()
+                    )
+                );
 
                 $entityManager->persist($wish);
                 $entityManager->flush();
