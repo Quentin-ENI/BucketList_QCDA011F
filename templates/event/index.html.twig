@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EventController!{% endblock %}
+
+{% block body %}
+    <h1>Liste des évènements</h1>
+    {% for event in events %}
+        <div class="event-card">
+            <p>{{ event.fields.daterange_fr }}</p>
+            <div>
+                <p><strong>{{ event.fields.title_fr }}</strong></p>
+                <br>
+                <p>{{ event.fields.location_name }}</p>
+                <p>{{ event.fields.location_address }}</p>
+                <br>
+                <p>{{ event.fields.description_fr }}</p>
+                <br>
+                <a href="{{ event.fields.canonicalurl }}"><p>{{ event.fields.canonicalurl }}</p></a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
